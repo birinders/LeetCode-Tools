@@ -10,20 +10,46 @@ class TreeNode:
         return False
 
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-
-def buildTree(preorder, inorder):
+def buildTree_PreIn(preorder, inorder):
     if inorder:
         rootval = preorder[0]
         root = TreeNode(rootval)
         index = inorder.index(preorder.pop(0))
-        root.left = buildTree(preorder, inorder[:index])
-        root.right = buildTree(preorder, inorder[index + 1 :])
+        root.left = buildTree_PreIn(preorder, inorder[:index])
+        root.right = buildTree_PreIn(preorder, inorder[index + 1 :])
         return root
+
+
+def buildTreeLC(values: list):
+    """
+    Builds a Binary Tree from LeetCode's format of providing binary trees.
+
+    It is recommended to copy paste their tree lists directly to avoid invalid input.
+    """
+
+    if not values:
+        return None
+    n = len(values)
+    idx = 1
+    head = TreeNode(values[0])
+    prev_level = [head]
+
+    while prev_level:
+        new_prev = []
+        for node in prev_level:
+            if idx < n and values[idx]:
+                node.left = TreeNode(values[idx])
+                new_prev.append(node.left)
+
+            if idx + 1 < n and values[idx + 1]:
+                node.right = TreeNode(values[idx + 1])
+                new_prev.append(node.right)
+
+            idx += 2
+
+        prev_level = new_prev
+
+    return head
 
 
 def print_level(root):
@@ -41,12 +67,14 @@ def print_level(root):
 
         queue = nqueue
 
+
 def print_preorder(root):
     if not root:
         return None
     print(root.val)
     print_postorder(root.left)
     print_postorder(root.right)
+
 
 def print_inorder(root):
     if not root:
@@ -55,10 +83,10 @@ def print_inorder(root):
     print(f"{root.val} ", end="")
     print_inorder(root.right)
 
+
 def print_postorder(root):
     if not root:
         return None
     print_postorder(root.left)
     print_postorder(root.right)
     print(root.val)
-

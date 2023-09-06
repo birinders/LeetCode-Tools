@@ -1,4 +1,7 @@
 from typing import Iterable
+from typing import Final
+
+null: Final = None
 
 
 class ListNode:
