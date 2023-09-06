@@ -125,7 +125,6 @@ def reverse_ll(head: ListNode, get_tail: bool = False) -> ListNode:
     # Check if the linked list is linked doubly
 
     final_tail = head
-
     prev = None
     while head:
         # Store the actual next aside
