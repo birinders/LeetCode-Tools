@@ -37,11 +37,11 @@ def buildTreeLC(values: list):
     while prev_level:
         new_prev = []
         for node in prev_level:
-            if idx < n and values[idx]:
+            if idx < n and values[idx] is not None:
                 node.left = TreeNode(values[idx])
                 new_prev.append(node.left)
 
-            if idx + 1 < n and values[idx + 1]:
+            if idx + 1 < n and values[idx + 1] is not None:
                 node.right = TreeNode(values[idx + 1])
                 new_prev.append(node.right)
 
@@ -72,8 +72,8 @@ def print_preorder(root):
     if not root:
         return None
     print(root.val)
-    print_postorder(root.left)
-    print_postorder(root.right)
+    print_preorder(root.left)
+    print_preorder(root.right)
 
 
 def print_inorder(root):
